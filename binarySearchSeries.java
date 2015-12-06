@@ -463,7 +463,7 @@ public class Solution {
         int start = 0, end = A.length - 1;
         while (start + 1 < end) {
             int mid = start + (end - start) / 2;
-            if (A[mid] < target) {
+            if (A[mid] < target) {i
                 start = mid;
             } else if (A[mid] >= target) {
                 end = mid;
