@@ -414,3 +414,67 @@ public class countOfSmallerNumber {
         }
     }
 }
+//k closest number in sorted array
+Algorithm:
+        1. Find the first index that A[index] >= target
+        2. set two pointers left = index - 1 and right = index
+        3. compare A[left] and A[right] to decide move which pointer
+public class Solution {
+    public int[] kClosestNumbers(int[] A, int target, int k) {
+        int[] result = new int[k];
+        if (A == null || A.length == 0) {
+            return result;
+        }
+        if (k > A.length) {
+            return A;
+        }
+        int index = firstIndex(A, target);
+        int left = index - 1, right = index;
+        for (int i = 0; i < k; i++) {
+            if (left >= 0 && right < A.length && Math.abs(target - A[left]) < Math.abs(target - A[right])) {
+                result[i] = A[left--];
+            } else if (left >= 0 && right < A.length && Math.abs(target - A[left]) > Math.abs(target - A[right])) {
+                result[i] = A[right++];
+            } else if(left >= 0 && right < A.length && Math.abs(target - A[left]) == Math.abs(target - A[right])){
+                if ( A[left] < A[right]) {
+                    result[i] = A[left];
+                    if(i + 1 < k) {
+                        result[++i] = A[right];
+                    }
+                } else {
+                    result[i] = A[right];
+                    if(i + 1 < k) {
+                        result[++i] = A[left];
+                    }
+                }
+                left--;
+                right++;
+            }
+            else if(left == -1 && right < A.length) {
+                result[i] = A[right++];
+            }
+            else if(right == A.length && left >= 0) {
+                result[i] = A[left--];
+            }
+        }
+        return result;
+    }
+    private int firstIndex(int[] A, int target) {
+        int start = 0, end = A.length - 1;
+        while (start + 1 < end) {
+            int mid = start + (end - start) / 2;
+            if (A[mid] < target) {
+                start = mid;
+            } else if (A[mid] >= target) {
+                end = mid;
+            } 
+        }
+        if (A[start] >= target) {
+            return start;
+        }
+        if (A[end] >= target) {
+            return end;
+        }
+        return A.length;
+    }
+}
