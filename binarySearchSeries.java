@@ -290,6 +290,7 @@ class Solution {
         long end = x;
         while(start + 1 < end) {
             long mid = start + (end - start) / 2;
+            //在这一步计算中有可能产生溢出，所以要转换成long
             if(mid * mid == target) {
                 return (int)mid;
             }
@@ -304,5 +305,112 @@ class Solution {
             return (int)end;
         }
         else return (int)start;
+    }
+}
+//pow
+public class Solution {
+    public double myPow(double x, int n) {
+        if(x == 0) {
+            return 0;
+        }
+        if(n == 0) {
+            return 1;
+        }
+        if(n == 1) {
+            return x;
+        }
+        boolean isInverted = (n < 0) ? true : false;
+        long num = Math.abs((long)n);
+        double res = helper(x, num);
+        return isInverted ? 1 / res : res;
+    }
+    private double helper(double x, long n) {
+        if(x == 0) {
+            return 0;
+        }
+        if(n == 0) {
+            return 1;
+        }
+        if(n == 1) {
+            return x;
+        }
+        double half = helper(x, n / 2);
+        double rest = helper(x, n - n / 2 - n / 2);
+        return half * half * rest;
+    }
+}
+
+//find minimum in rotated sorted array
+得考虑两种情况，一种是已经rotated一种是没有rotate，综合比较起来直接先将end与mid来比较会更简洁
+public class Solution {
+    public int findMin(int[] num) {
+        if(num == null || num.length == 0) {
+            return 0;
+        }
+        int start = 0;
+        int end = num.length - 1;
+        while(start + 1 < end) {
+            int mid = start + (end - start) / 2;
+            if(num[mid] <= num[end]) {
+                end = mid;
+            }
+            else {
+                start = mid;
+            }
+        }
+        return Math.min(num[start], num[end]);
+    }
+}
+//count of smaller number
+转换成找到最后一个比target number小的index，然后返回index+1
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class countOfSmallerNumber {
+   /**
+     * @param A: An integer array
+     * @return: The number of element in the array that 
+     *          are smaller that the given integer
+     */
+	public static void main(String[] args) {
+		countOfSmallerNumber c = new countOfSmallerNumber();
+		int[] A = {86,59,39};
+		int[] queries = {1,100,57,50,60};
+		ArrayList<Integer> res = c.countOfSmallerNumber(A, queries);
+		for(Integer item : res) {
+			System.out.print(item + " ");
+		}
+	}
+    public ArrayList<Integer> countOfSmallerNumber(int[] A, int[] queries) {
+        // write your code here
+        ArrayList<Integer> res = new ArrayList<Integer>();
+        Arrays.sort(A);
+        for(Integer item : queries) {
+            int count = helper(A, item);
+            res.add(count);
+        }
+        return res;
+    }
+    private int helper(int[] A, int target) {
+        int start = 0;
+        int end = A.length - 1;
+        while(start + 1 < end) {
+            int mid = start + (end - start) / 2;
+            if(A[mid] < target) {
+                start = mid;
+            }
+            else {
+                end = mid;
+            }
+        }
+        if(A[end] < target) {
+            return end + 1;
+        }
+        else if(A[start] < target){
+            return start + 1;
+        }
+        else {
+            return 0;
+        }
     }
 }
