@@ -3,6 +3,7 @@
 - write a method that returns that value in the least number of coins possible                                                                                                                         
 - result should be the number of coins needed for each denomination                                                                                                                   . 1point 3acres 璁哄潧
 */
+//但是不能够保证最优解，因为是greedy算法
 public class Solution {
 	public int[] leastNumberCoinChange(int[] denomination, int target) {
 		if(denomination == null || denomination.length == 0) {
