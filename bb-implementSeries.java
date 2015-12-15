@@ -1,25 +1,29 @@
 Implement Stack using Queues
 class MyStack {
     // Push element x onto stack.
-    Queue<Integer> queue1 = new LinkedList<Integer>();
-    Queue<Integer> queue2 = new LinkedList<Integer>();
+    Queue<Integer> queue = new LinkedList<Integer>();
+    int size = 0;
     public void push(int x) {
-        
+        queue.offer(x);
+        size++;
+        int num = size;//这里将size保存一下很重要，不然会造成判断错误，不能够直接拿size来判断
+        while(--num > 0) {
+            queue.offer(queue.poll());
+        }
     }
-
     // Removes the element on top of the stack.
     public void pop() {
-        
+        size--;
+        queue.poll();
     }
-
     // Get the top element.
     public int top() {
-        
+        return queue.peek();
     }
 
     // Return whether the stack is empty.
     public boolean empty() {
-        return (queue1.isEmpty() && queue2.isEmpty());
+        return (size == 0);
     }
 }
 
