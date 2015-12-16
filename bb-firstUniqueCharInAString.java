@@ -55,3 +55,20 @@ public class findFirstUnique {
 		System.out.println("The result is: " + f.find(s));
 	}
 }
+
+A的ASCII是65，a的ASCII是97，新数组长度是26 * 2 + 6 = 58；
+public class Solution {
+	public char findUnique(String s) {
+		s = s.toLowerCase();
+		int[] count = new int[26];
+		for(int i = 0; i < s.length(); i++) {
+			count[s.charAt(i) - 'a']++;
+		}
+		for(int i = 0; i < 26; i++) {
+			if(count[i] == 1) {
+				return (char)('a' + count[i]);
+			}
+		}
+		return null;
+	}
+}
