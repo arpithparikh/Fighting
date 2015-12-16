@@ -224,3 +224,131 @@ public class Solution {
         return count;
     }
 }
+
+//import java.util.*;
+//public class twoSum {
+//  public ArrayList<ArrayList<Integer>> find(int[] nums, int target) {
+//      ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
+//      if(nums == null || nums.length == 0) {
+//          return res;
+//      }
+////        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+////        HashSet<ArrayList<Integer>> set = new HashSet<ArrayList<Integer>>();
+////        for(int i = 0; i < nums.length; i++) {
+////            if(map.containsKey(target - nums[i])) {
+////                ArrayList<Integer> temp = new ArrayList<Integer>();
+////                temp.add(target - nums[i]);
+////                temp.add(nums[i]);
+////                if(!set.contains(temp)) {
+////                    res.add(temp);
+////                    set.add(temp);
+////                }
+////            }
+////            else {
+////                map.put(nums[i], i);
+////            }
+////        }
+//      Arrays.sort(nums);
+//      int left = 0;
+//      int right = nums.length - 1;
+//      while(left < right) {
+//          int sum = nums[left] + nums[right];
+//          if(sum == target) {
+//              ArrayList<Integer> temp = new ArrayList<Integer>();
+//              temp.add(nums[left]);
+//              temp.add(nums[right]);
+//              res.add(temp);
+//              left++;
+//              right--;
+//              while(left < right && nums[left] == nums[left - 1]) {
+//                  left++;
+//              }
+//              while(left < right && nums[right] == nums[right + 1]) {
+//                  right--;
+//              }
+//          }
+//          else if(sum > 0) {
+//              right--;
+//          }
+//          else {
+//              left++;
+//          }
+//      }
+//      return res;
+//  }
+//  public static void main(String[] args) {
+//      twoSum t = new twoSum();
+//      int[] nums = {1,2,3,4,4,4,4,44,4,5,6,7};
+//      int target = 8;
+//      ArrayList<ArrayList<Integer>> res = t.find(nums, target);
+//      int j = 0;
+//      for(int i = 0; i < res.size(); i++) {
+//          for(j = 0; j < res.get(i).size(); j++) {
+//              System.out.print(res.get(i).get(j) + " ");
+//          }
+//          if(j == res.get(i).size()) {
+//              System.out.println(" ");
+//          }
+//      }
+//  }
+//}
+import java.util.*;
+public class twoSum {
+    public int[] twoSum(int[] nums, int target) {
+        int[] result = new int[2];
+        result[0] = Integer.MAX_VALUE;
+        result[1] = Integer.MAX_VALUE;
+        if( nums == null || nums.length < 2 ){
+            return result;
+        }
+        int length = nums.length;
+        HashMap<Integer, ArrayList<Integer>> map = new HashMap<Integer, ArrayList<Integer>>();
+        for(int i = 0; i < length; i++){
+            if( map.containsKey(nums[i]) ){
+                map.get(nums[i]).add(i);
+            }else{
+                ArrayList<Integer> temp = new ArrayList<Integer>();
+                temp.add(i);
+                map.put(nums[i], temp);
+            }
+        }
+
+        Arrays.sort(nums);
+        int left = 0, right = length - 1;
+        while( left < right ){
+            if( nums[left] + nums[right] < target ){
+                left++;
+            }else if( nums[left] + nums[right] > target ){
+                right--;
+            }else{
+                if( nums[left] == nums[right] ){
+                    int temp1 = Math.min(map.get(nums[left]).get(0), map.get(nums[left]).get(1));
+                    int temp2 = Math.max(map.get(nums[left]).get(0), map.get(nums[left]).get(1));
+                    if(temp1 < result[0]) {
+                        result[0] = temp1;
+                        result[1] = temp2;
+                    }
+                    return result;
+                }else{
+                    int temp1 = map.get(nums[left]).get(0);
+                    int temp2 = map.get(nums[right]).get(0);
+                    if(temp1 < result[0]) {
+                        result[0] = temp1;
+                        result[1] = temp2;
+                    }
+                    return result;
+                }
+            }
+        }
+        return result;
+    }
+    public static void main(String[] args) {
+        twoSum t = new twoSum();
+        int[] nums = {2,1,11,12};
+        int target = 13;
+        int[] res = t.twoSum(nums, target);
+        for(int i = 0; i < 2; i++) {
+            System.out.print(res[i] + " ");
+        }
+    }
+}
