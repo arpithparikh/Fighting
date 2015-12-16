@@ -17,7 +17,6 @@ public class add {
 
 public static ArrayList<ArrayList<Integer>> genNums(int num1, int num2) {
         ArrayList<ArrayList<Integer>> results = new ArrayList<ArrayList<Integer>>();
-
         ArrayList<Integer> result = new ArrayList<Integer>();
         result.add(num1);
         result.add(num2);
