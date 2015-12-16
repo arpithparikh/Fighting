@@ -44,29 +44,28 @@ public class Solution {
 public class Solution {
     public int lengthOfLongestSubstringTwoDistinct(String s) {
         if(s == null || s.length() == 0) {
-        	return 0;
+            return 0;
         }
-        int max = 0;
         HashSet<Character> set = new HashSet<Character>();
         int left = 0;
         int right = 0;
+        int max = 0;
         while(right < s.length()) {
-        	char c = s.charAt(right);
-        	if(set.contains(c)) {
-        		right++;
-        	}
-        	else {
-        		if(!set.contains(c) && set.size() < 2) {
-        			set.add(c);
-        			right++;
-        		}
-        		else {
-        			max = Math.max(max, right - left);
-        			left++;
-        			right = left;
-        			set.clear();
-        		}
-        	}
+            char c = s.charAt(right);
+            if(set.contains(c)) {
+                right++;
+            }
+            else {
+                if(set.size() < 2) {
+                    set.add(c);
+                }
+                else {
+                    max = Math.max(right - left, max);
+                    left++;
+                    right = left;
+                    set.clear();
+                }
+            }
         }
         max = Math.max(max, right - left);
         return max;

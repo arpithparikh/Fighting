@@ -6,22 +6,30 @@ top() -- Get the top element.
 getMin() -- Retrieve the minimum element in the stack.
 
 class MinStack {
-	Stack<Integer> stack = new Stack<Integer>();
-	Stack<Integer> minStack = new Stack<Integer>();
+    Stack<Integer> stack = new Stack<Integer>();
+    Stack<Integer> minStack = new Stack<Integer>();
     public void push(int x) {
         stack.push(x);
-        //这里比较tricky，一个是要考虑到一开始minStack为空，不管怎样都要push元素，
-        //另一个就是只要不大于我就要push，不然会造成empty stack
-        if(minStack.isEmpty() || minStack.peek() >= x) {
-        	minStack.push(x);
+        if(minStack.isEmpty()) {
+            minStack.push(x);
         }
+        else {
+            if(minStack.peek() >= x) {
+                minStack.push(x);
+            }
+        }
+        
     }
 
     public void pop() {
-        if(minStack.peek().equals(stack.peek())) {
-        	minStack.pop();
+        这里一定要用equals
+        if(!stack.isEmpty() && !minStack.isEmpty() && minStack.peek().equals(stack.peek())) {
+            minStack.pop();
+            stack.pop();
         }
-        stack.pop();
+        else {
+            stack.pop();
+        }
     }
 
     public int top() {
@@ -32,6 +40,7 @@ class MinStack {
         return minStack.peek();
     }
 }
+
 
 简化后的代码
 class MinStack {
