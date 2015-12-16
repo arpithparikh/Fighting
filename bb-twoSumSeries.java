@@ -24,40 +24,40 @@ public class Solution {
 public class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
-        if(nums == null || nums.length < 3) {
-        	return res;
+        if(nums == null || nums.length == 0) {
+            return res;
         }
         Arrays.sort(nums);
         for(int i = 0; i < nums.length; i++) {
-        	if(i != 0 && nums[i - 1] == nums[i]) {
-        		continue;
-        	}
-        	int left = i + 1;
-        	int right = nums.length - 1;
-        	while(left < right) {
-        		int sum = nums[i] + nums[left] + nums[right];
-        		if(sum == 0) {
-        			List<Integer> temp = new ArrayList<Integer>();
-        			temp.add(nums[i]);
-        			temp.add(nums[left]);
-        			temp.add(nums[right]);
-        			res.add(temp);
-        			left++;
-        			right--;
-        			while(left < right && nums[left] == nums[left - 1]) {
-        				left++;
-        			}
-        			while(left < right && nums[right] == nums[right + 1]) {
-        				right--;
-        			}
-        		}
-        		else if(sum > 0) {
-        			right--;
-        		}
-        		else {
-        			left++;
-        		}
-        	}
+            if(i != 0 && nums[i - 1] == nums[i]) {
+                continue;
+            }
+            int left = i + 1;
+            int right = nums.length - 1;
+            while(left < right) {
+                int sum = nums[i] + nums[left] + nums[right];
+                if(sum == 0) {
+                    List<Integer> temp = new ArrayList<Integer>();
+                    temp.add(nums[i]);
+                    temp.add(nums[left]);
+                    temp.add(nums[right]);
+                    res.add(temp);
+                    left++;
+                    right--;
+                    while(left < right && nums[left] == nums[left - 1]) {
+                        left++;
+                    }
+                    while(left < right && nums[right] == nums[right + 1]) {
+                        right--;
+                    }
+                }
+                else if(sum > 0) {
+                    right--;
+                }
+                else {
+                    left++;
+                }
+            }
         }
         return res;
     }
@@ -67,35 +67,37 @@ public class Solution {
 public class Solution {
     public int threeSumClosest(int[] nums, int target) {
         if(nums == null || nums.length < 3) {
-        	return -1;
+            return 0;
         }
         Arrays.sort(nums);
         int minDiff = Integer.MAX_VALUE;
         int res = 0;
         for(int i = 0; i < nums.length; i++) {
-        	int left = i + 1;
-        	int right = nums.length - 1;
-        	while(left < right) {
-        		int sum = nums[i] + nums[left] + nums[right];
-        		if(Math.abs(sum - target) < minDiff) {
-        			res = sum;
-        			minDiff = Math.abs(sum - target);
-        		}
-        		if(sum == target) {
-        			return sum;
-        		}
-        		else if(sum > target) {
-        			right--;
-        		}
-        		else {
-        			left++;
-        		}
-        	}
+            if(i != 0 && nums[i - 1] == nums[i]) {
+                continue;
+            }
+            int left = i + 1;
+            int right = nums.length - 1;
+            while(left < right) {
+                int sum = nums[i] + nums[left] + nums[right];
+                if(minDiff > Math.abs(sum - target)) {
+                    res = sum;
+                    minDiff = Math.abs(sum - target);
+                }
+                if(sum == target) {
+                    return sum;
+                }
+                else if(sum > target) {
+                    right--;
+                }
+                else {
+                    left++;
+                }
+            }
         }
         return res;
     }
 }
-
 4sum
 public class Solution {
     public List<List<Integer>> fourSum(int[] nums, int target) {

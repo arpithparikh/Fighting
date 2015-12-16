@@ -24,3 +24,23 @@ public class Solution {
 		return null;
 	}
 }
+
+S1 = "Hello", S2 = "Apple"，那么返回2，因为s1(2) = 'l' == s2(3)
+public class Solution {
+	public Character find(String s1, String s2) {
+		//brute就是用双重循环过一遍，时间On2
+		//优化，时间On空间On，hashmap查重
+		HashSet<Character> set = new HashSet<Character>();
+		for(int i = 0; i < s1.length(); i++) {
+			if(!set.contains(s1.charAt(i))) {
+				set.add(s1.charAt(i));
+			}
+		}
+		for(int i = 0; i < s2.length(); i++) {
+			if(set.contains(s2.charAt(i))) {
+				return s2.charAt(i);
+			}
+		}
+		return null;
+	}
+}
