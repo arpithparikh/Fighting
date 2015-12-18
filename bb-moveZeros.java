@@ -22,7 +22,27 @@ public class Solution {
         nums[j] = temp;
     }
 }
-
+do not use swap, save space
+public class Solution {
+    public void moveZeroes(int[] nums) {
+        if(nums == null || nums.length == 0) {
+            return;
+        }
+        int count = 0;
+        for(int i = 0; i < nums.length; i++) {
+            if(nums[i] == 0) {
+                count++;
+            }
+            else {
+                nums[i - count] = nums[i];
+            }
+        }
+        int index = nums.length - 1;
+        while(count-- > 0) {
+            nums[index--] = 0;
+        }
+    }
+}
 
 //这个做法是没有保留原有的顺序的
 public class Solution {
