@@ -8,6 +8,7 @@ public class Solution {
         helper(0, digits, sb, res);
         return res;
     }
+    
     private void helper(int index, String digits, StringBuffer sb, List<String> res) {
         //index是从0开始的，所以等于length代表已经遍历完了一个分支
         if(index == digits.length()) {
