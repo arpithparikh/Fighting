@@ -140,3 +140,18 @@ set N = N - 1;
       limit N,1
   );
 END
+
+#RANK SCORE
+select Scores.Score, COUNT(Ranking.Score) as RANK
+from Scores, (select distinct Score from Scores) Ranking
+where Scores.Score <= Ranking.Score
+group by Scores.Id, Scores.Score
+order by Scores.Score DESC;
+
+#select consecutive numbers which occur more than 2 times larger or equal to 3
+select distinct l.Num Num
+from Logs l, Logs l1, Logs l2
+where l.Num = l1.Num
+and l1.Num = l2.Num
+and l.Id = l1.Id + 1
+and l1.Id = l2.Id + 1;
