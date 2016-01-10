@@ -93,3 +93,36 @@ select w1.Id
 from Weather w1 inner join Weather w2 
 on TO_DAYS(w1.Date) = TO_DAYS(w2.Date) + 1
 where w1.temperature > w2.temperature;
+
+The Employee table holds all employees. Every employee has an Id, a salary, and there is also a column for the department Id.
+
++----+-------+--------+--------------+
+| Id | Name  | Salary | DepartmentId |
++----+-------+--------+--------------+
+| 1  | Joe   | 70000  | 1            |
+| 2  | Henry | 80000  | 2            |
+| 3  | Sam   | 60000  | 2            |
+| 4  | Max   | 90000  | 1            |
++----+-------+--------+--------------+
+The Department table holds all departments of the company.
+
++----+----------+
+| Id | Name     |
++----+----------+
+| 1  | IT       |
+| 2  | Sales    |
++----+----------+
+Write a SQL query to find employees who have the highest salary in each of the departments. For the above tables, Max has the highest salary in the IT department and Henry has the highest salary in the Sales department.
+
++------------+----------+--------+
+| Department | Employee | Salary |
++------------+----------+--------+
+| IT         | Max      | 90000  |
+| Sales      | Henry    | 80000  |
++------------+----------+--------+
+#按照题目中要求的，先找到三个column然后再在里面继续寻找，前提是两个表的departmentId相等然后salary是当前dep的最大salary
+#然后找最大salary又是一个函数，相当于双重迭代关系
+select dep.Name, emp.Name, emp.Salary
+from Department dep, Employee emp
+where emp.DepartmentId = dep.Id and 
+Salary = (select max(Salary) from Employee emp2 where dep.Id = emp2.DepartmentId );
