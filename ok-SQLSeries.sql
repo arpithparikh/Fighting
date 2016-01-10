@@ -73,8 +73,10 @@ group by Person.Email
 having count(*) > 1;
 
 Customer who never order
-
+#这里要利用到left join,或者left outer join,然后要找never order所以只需要加上条件是Orders.CustomerId is null即可
 select Customers.Name
 from Customers left join Orders
 on Customers.Id = Orders.CustomerId
 where Orders.CustomerId is null;
+
+
