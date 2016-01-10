@@ -15,3 +15,36 @@ Write a SQL query to get the second highest salary from the Employee table.
 | 2  | 200    |
 | 3  | 300    |
 +----+--------+
+
+select MAX(Employee.Salary)
+from Employee
+where Employee.Salary < (select MAX(Employee.Salary) from Employee)
+
+#或者还可以写成,只不过要慢一些
+select MAX(Employee.Salary)
+from Employee
+where Employee.Salary not in(select MAX(Employee.Salary) from Employee);
+
+
+The Employee table holds all employees including their managers. Every employee has an Id, and there is also a column for the manager Id.
+
++----+-------+--------+-----------+
+| Id | Name  | Salary | ManagerId |
++----+-------+--------+-----------+
+| 1  | Joe   | 70000  | 3         |
+| 2  | Henry | 80000  | 4         |
+| 3  | Sam   | 60000  | NULL      |
+| 4  | Max   | 90000  | NULL      |
++----+-------+--------+-----------+
+Given the Employee table, write a SQL query that finds out employees who earn more than their managers. For the above table, Joe is the only employee who earns more than his manager.
+
++----------+
+| Employee |
++----------+
+| Joe      |
++----------+
+#这里要用到两个表格，一个代表employee表，一个是manager表，并且这里是自己跟自己join所以要用到的是inner join
+select e1.Name
+from Employee e1 inner join Employee e2
+on e1.ManagerId = e2.Id
+where e1.Salary > e2.Salary;
