@@ -125,4 +125,18 @@ Write a SQL query to find employees who have the highest salary in each of the d
 select dep.Name, emp.Name, emp.Salary
 from Department dep, Employee emp
 where emp.DepartmentId = dep.Id and 
-Salary = (select max(Salary) from Employee emp2 where dep.Id = emp2.DepartmentId );
+Salary = (select max(Salary) from Employee emp2 where dep.Id = emp2.DepartmentId);
+
+#Nth highest Salary
+CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
+BEGIN
+set N = N - 1;
+  RETURN (
+      # Write your MySQL query statement below.
+      select distinct Employee.Salary
+      from Employee
+      group by Salary
+      order by Salary DESC
+      limit N,1
+  );
+END
