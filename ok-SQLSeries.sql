@@ -80,3 +80,16 @@ on Customers.Id = Orders.CustomerId
 where Orders.CustomerId is null;
 
 
+#delete duplicate
+#需要用到delete语句，并且需要先进行p1.Id > p2.Id的判断
+delete p1
+from Person p1, Person p2
+where p1.Id > p2.Id and p1.Email = p2.Email;
+
+# rising temperature
+#遇到这种题，类似于自己在自己里面找两个元素的大小关系，这时候就要考虑用到inner join
+#再就是对于API的熟练使用
+select w1.Id
+from Weather w1 inner join Weather w2 
+on TO_DAYS(w1.Date) = TO_DAYS(w2.Date) + 1
+where w1.temperature > w2.temperature;
