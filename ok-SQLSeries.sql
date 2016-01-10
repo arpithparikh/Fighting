@@ -44,7 +44,37 @@ Given the Employee table, write a SQL query that finds out employees who earn mo
 | Joe      |
 +----------+
 #这里要用到两个表格，一个代表employee表，一个是manager表，并且这里是自己跟自己join所以要用到的是inner join
+
 select e1.Name
 from Employee e1 inner join Employee e2
 on e1.ManagerId = e2.Id
 where e1.Salary > e2.Salary;
+
+Write a SQL query to find all duplicate emails in a table named Person.
+
++----+---------+
+| Id | Email   |
++----+---------+
+| 1  | a@b.com |
+| 2  | c@d.com |
+| 3  | a@b.com |
++----+---------+
+For example, your query should return the following for the above table:
+
++---------+
+| Email   |
++---------+
+| a@b.com |
++---------+
+#这里说的是要找出重复的email，所以首先想到利用group by对email进行归类，然后将数量大于1的emailselect出来就好了
+select Person.Email
+from Person
+group by Person.Email
+having count(*) > 1;
+
+Customer who never order
+
+select Customers.Name
+from Customers left join Orders
+on Customers.Id = Orders.CustomerId
+where Orders.CustomerId is null;
