@@ -150,9 +150,57 @@ group by Scores.Id, Scores.Score
 order by Scores.Score DESC;
 
 #select consecutive numbers which occur more than 2 times larger or equal to 3
-select distinct l.Num Num
-from Logs l, Logs l1, Logs l2
-where l.Num = l1.Num
-and l1.Num = l2.Num
-and l.Id = l1.Id + 1
-and l1.Id = l2.Id + 1;
+#pay attention to distinct
+#因为题目的意思是只要出现多于三次的我就找出来，
+#而我做的是以3为一个基准，有可能一个num出现了4次那么这个数就会在结果中出现两次，
+#所以要用distinct来选出unique的
+
+select distinct l1.Num
+from Logs l1, Logs l2, Logs l3
+where l1.Id = l2.Id - 1 and
+l2.Id = l3.Id - 1 and 
+l1.Num = l2.Num and
+l2.Num = l3.Num;
+
+
+
+
+The Employee table holds all employees. Every employee has an Id, and there is also a column for the department Id.
+
++----+-------+--------+--------------+
+| Id | Name  | Salary | DepartmentId |
++----+-------+--------+--------------+
+| 1  | Joe   | 70000  | 1            |
+| 2  | Henry | 80000  | 2            |
+| 3  | Sam   | 60000  | 2            |
+| 4  | Max   | 90000  | 1            |
+| 5  | Janet | 69000  | 1            |
+| 6  | Randy | 85000  | 1            |
++----+-------+--------+--------------+
+The Department table holds all departments of the company.
+
++----+----------+
+| Id | Name     |
++----+----------+
+| 1  | IT       |
+| 2  | Sales    |
++----+----------+
+Write a SQL query to find employees who earn the top three salaries in each of the department. For the above tables, your SQL query should return the following rows.
+
++------------+----------+--------+
+| Department | Employee | Salary |
++------------+----------+--------+
+| IT         | Max      | 90000  |
+
+| IT         | Randy    | 85000  |
+| IT         | Joe      | 70000  |
+| Sales      | Henry    | 80000  |
+| Sales      | Sam      | 60000  |
++------------+----------+--------+
+
+select d.Name as Department, e.Name as Employee, e.Salary as Salary
+from Employee e inner join Department d 
+on e.DepartmentId = d.Id
+where (select count(distinct e1.Salary) from Employee e1 
+	where e1.Salary > e.Salary and e1.DepartmentId = e.DepartmentId) < 3
+order by d.Name, e.Salary DESC;
