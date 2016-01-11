@@ -3,7 +3,7 @@
 #所以就是说全部的left join就好
 select Person.FirstName, Person.LastName, Address.City, Address.State
 from Person left join Address
-on Perosn.PersonId = Address.PersonId;
+on Person.PersonId = Address.PersonId;
 
 
 Write a SQL query to get the second highest salary from the Employee table.
@@ -120,7 +120,8 @@ Write a SQL query to find employees who have the highest salary in each of the d
 | IT         | Max      | 90000  |
 | Sales      | Henry    | 80000  |
 +------------+----------+--------+
-#按照题目中要求的，先找到三个column然后再在里面继续寻找，前提是两个表的departmentId相等然后salary是当前dep的最大salary
+#按照题目中要求的，先找到三个column然后再在里面继续寻找，
+#前提是两个表的departmentId相等然后salary是当前dep的最大salary
 #然后找最大salary又是一个函数，相当于双重迭代关系
 select dep.Name, emp.Name, emp.Salary
 from Department dep, Employee emp
