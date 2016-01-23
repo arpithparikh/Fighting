@@ -4,6 +4,10 @@ mask Ox1F
 N = 10000000
 public class Solution {
 	public void bitMap(int n) {
+		//实现了三步
+		//求十进制的0-N对应在数组a中的下标 n / 32
+		// 求0-N对应 0-31中的数， N % 32 = M
+		// 利用移位0-31使得对应32bit位为1， 1 << M
 		n = 10000000;
 		int bitPerWord = 32;
 		int shift = 5;
