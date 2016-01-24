@@ -15,3 +15,31 @@ public class Solution {
         return 0;
     }
 }
+
+//利用后缀和
+public class Solution {
+	public int hIndex(int[] citations) {
+		if(citations == null || citations.length == 0) {
+			return 0;
+		}
+		int length = citations.length;
+		int[] res = new int[length + 1];
+		for(int i = 0; i < length; i++) {
+			if(citations[i] >= length) {
+				res[length]++;
+			}
+			else {
+				res[citations[i]]++;
+			}
+		}
+		for(int i = length - 1; i > 0; i--) {
+			res[i] += res[i - 1];
+		}
+		for(int i = length; i > 0; i--) {
+			if(res[i] >= i) {
+				return i;
+			}
+		}
+		return 0;
+	}
+}
