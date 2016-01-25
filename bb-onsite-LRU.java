@@ -1,21 +1,21 @@
 class DoubleLinkedListNode {
+    int key;
+    int val;
     DoubleLinkedListNode pre;
     DoubleLinkedListNode next;
-    int val;
-    int key;
     DoubleLinkedListNode(int key, int val) {
-        pre = null;
-        next = null;
-        this.val = val;
         this.key = key;
+        this.val = val;
+        this.pre = null;
+        this.next = null;
     }
 }
 public class LRUCache {
-    int capacity;
-    int length;
+    HashMap<Integer, DoubleLinkedListNode> map = new HashMap<Integer, DoubleLinkedListNode>();
     DoubleLinkedListNode head;
     DoubleLinkedListNode end;
-    HashMap<Integer, DoubleLinkedListNode> map = new HashMap<Integer, DoubleLinkedListNode>();
+    int capacity;
+    int length;
     public LRUCache(int capacity) {
         this.capacity = capacity;
         length = 0;
@@ -39,33 +39,33 @@ public class LRUCache {
         if(map.containsKey(key)) {
             DoubleLinkedListNode node = map.get(key);
             removeNode(node);
-            map.remove(key);
             node.val = value;
-            setHead(node);
             map.put(key, node);
+            setHead(node);
         }
         else {
             if(length < capacity) {
-                DoubleLinkedListNode node = new DoubleLinkedListNode(key, value);
                 length++;
-                map.put(key, node);
+                DoubleLinkedListNode node = new DoubleLinkedListNode(key, value);
                 setHead(node);
+                map.put(key, node);
             }
             else {
                 DoubleLinkedListNode node = new DoubleLinkedListNode(key, value);
+                //这一步非常之重要
                 map.remove(end.key);
                 end = end.pre;
                 if(end != null) {
                     end.next = null;
-                }
+                } 
                 setHead(node);
                 map.put(key, node);
             }
         }
     }
     private void setHead(DoubleLinkedListNode node) {
-        node.pre = null;
         node.next = head;
+        node.pre = null;
         if(head != null) {
             head.pre = node;
         }
