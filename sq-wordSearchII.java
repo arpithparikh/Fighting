@@ -58,12 +58,12 @@ public class Solution {
         if(board == null || board.length == 0 || board[0].length == 0 || words == null || words.length == 0) {
             return res;
         }
+        Trie trie = new Trie();
+        HashSet<String> set = new HashSet<String>();
         int m = board.length;
         int n = board[0].length;
-        HashSet<String> set = new HashSet<String>();
-        Trie trie = new Trie();
-        for(String word : words) {
-            trie.insert(word);
+        for(String s : words) {
+            trie.insert(s);
         }
         for(int i = 0; i < m; i++) {
             for(int j = 0; j < n; j++) {
@@ -72,26 +72,26 @@ public class Solution {
         }
         return res;
     }
-    private void helper(char[][] board,  Trie trie, List<String> res, int x, int y, HashSet<String> set, String s) {
-        if(x < 0 || x >= board.length || y < 0 || y >= board[0].length || board[x][y] == '#') {
+    private void helper(char[][] board, Trie trie, List<String> res, int i, int j, HashSet<String> set, String s) {
+        if(i < 0 || i >= board.length || j < 0 || j >= board[0].length || board[i][j] == '#') {
             return;
         }
-        s += board[x][y];
+        s += board[i][j];
         if(!trie.startWith(s)) {
             return;
         }
         if(trie.find(s)) {
             if(!set.contains(s)) {
                 res.add(s);
+                set.add(s);
             }
-            set.add(s);
         }
-        char c = board[x][y];
-        board[x][y] = '#';
-        helper(board, trie, res, x + 1, y, set, s);
-        helper(board, trie, res, x - 1, y, set, s);
-        helper(board, trie, res, x, y + 1, set, s);
-        helper(board, trie, res, x, y - 1, set, s);
-        board[x][y] = c;
+        char c = board[i][j];
+        board[i][j] = '#';
+        helper(board, trie, res, i + 1, j, set, s);
+        helper(board, trie, res, i - 1, j, set, s);
+        helper(board, trie, res, i, j + 1, set, s);
+        helper(board, trie, res, i, j - 1, set, s);
+        board[i][j] = c;
     }
 }
